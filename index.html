@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>A Friulian Evening with Jermann - Infinite Loop</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'serif': ['Playfair Display', 'serif'],
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        // Friulian color palette
+                        'glacial-white': '#F5FBFF',
+                        'pearl': '#EAEEF2',
+                        'dolomite-silver': '#C8D0D9',
+                        'alpine-sunrise': '#E0B583',
+                        'glacier-blue': '#7FA0B3',
+                        'firmament-blue': '#4A6572',
+                        'snow-shadow': '#E8EFF4',
+                        'ice-cave': '#D2DDE5',
+                        'midnight-rock': '#2A3439',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out',
+                        'slide-in-left': 'slideInLeft 1s ease-out',
+                        'slide-in-right': 'slideInRight 1s ease-out',
+                        'gradient-shift': 'gradientShift 8s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'infinite-scroll': 'infiniteScroll 30s linear infinite',
+                        'fade-out': 'fadeOut 1s ease-in forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        slideInLeft: {
+                            '0%': { opacity: '0', transform: 'translateX(-50px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' }
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(50px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' }
+                        },
+                        gradientShift: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' }
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 20px rgba(224, 181, 131, 0.4)' },
+                            '100%': { boxShadow: '0 0 40px rgba(224, 181, 131, 0.8)' }
+                        },
+                        infiniteScroll: {
+                            '0%': { transform: 'translateY(0%)' },
+                            '100%': { transform: 'translateY(-200%)' }
+                        },
+                        fadeOut: {
+                            '0%': { opacity: '1' },
+                            '100%': { opacity: '0' } 
+                        }
+                    },
+                    backgroundImage: {
+                        'hero-gradient': 'linear-gradient(135deg, rgba(74, 101, 114, 0.95) 0%, rgba(127, 160, 179, 0.9) 50%, rgba(245, 251, 255, 0.95) 100%)',
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom glassmorphism effects */
+        .glass {
+            background: rgba(245, 251, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Luxury text effects */
+        .text-shadow-gold {
+            text-shadow: 0 2px 4px rgba(224, 181, 131, 0.3);
+        }
+        
+        /* Background patterns */
+        .pattern-dots {
+            background-image: radial-gradient(circle, rgba(224, 181, 131, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        /* Carousel styles */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .carousel-item {
+            min-width: 100%;
+            flex: 1 0 100%;
+        }
+        
+        .carousel-nav button {
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .carousel-nav button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Infinite scroll container */
+        .infinite-container {
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .scroll-content {
+            height: 300%;
+            /* animation: infiniteScroll 30s linear infinite; */
+        }
+        
+        .scroll-content:hover {
+            animation-play-state: paused;
+        }
+        
+        .section-wrapper {
+            height: 33.333%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, rgba(74, 101, 114, 0.75) 0%, rgba(127, 160, 179, 0.7) 50%, rgba(245, 251, 255, 0.75) 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+        
+        .jermann-section {
+            background: linear-gradient(135deg, rgba(74, 101, 114, 0.98) 0%, rgba(42, 52, 57, 0.98) 100%);
+        }
+        
+        /* Slideshow indicator dots */
+        .slideshow-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        
+        .slideshow-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .slideshow-dot.active {
+            background-color: #E0B583;
+            transform: scale(1.3);
+        }
+        
+        /* Background slideshow styles */
+        .slideshow {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .slideshow-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            animation: imageAnimation 36s infinite;
+            filter: brightness(0.7);
+        }
+        
+        .slideshow-image:nth-child(1) {
+            background-image: url('botti.jpg');
+            animation-delay: 0s;
+        }
+        .slideshow-image:nth-child(2) {
+            background-image: url('tramonto.jpg');
+            animation-delay: 6s;
+        }
+        .slideshow-image:nth-child(3) {
+            background-image: url('villanova_05.jpg');
+            animation-delay: 12s;
+        }
+        .slideshow-image:nth-child(4) {
+            background-image: url('cantina_villanova_21.jpg');
+            animation-delay: 18s;
+        }
+        .slideshow-image:nth-child(5) {
+            background-image: url('botti1.jpg');
+            animation-delay: 24s;
+        }
+        .slideshow-image:nth-child(6) {
+            background-image: url('cantina_ruttars_21.jpg');
+            animation-delay: 30s;
+        }
+        
+        @keyframes imageAnimation {
+            0% {
+                opacity: 0;
+                transform: scale(1.1);
+            }
+            5% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            15% {
+                opacity: 1;
+            }
+            20% {
+                opacity: 0;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.1);
+            }
+        }
+        
+        /* Countdown styles */
+        .countdown-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 50;
+            background: rgba(74, 101, 114, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(224, 181, 131, 0.3);
+            border-radius: 12px;
+            padding: 15px 20px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease;
+        }
+        
+        .countdown-title {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: #E0B583;
+            font-weight: 500;
+        }
+        
+        .countdown-timer {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .countdown-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 50px;
+        }
+        
+        .countdown-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #F5FBFF;
+        }
+        
+        .countdown-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #E0B583;
+        }
+        
+        .countdown-expired {
+            animation: fadeOut 1s ease-in forwards;
+        }
+    </style>
+</head>
+
+<body class="font-sans text-midnight-rock bg-pearl antialiased overflow-hidden">
+    
+    <div class="slideshow">
+        <div class="slideshow-image"></div>
+        <div class="slideshow-image"></div>
+        <div class="slideshow-image"></div>
+        <div class="slideshow-image"></div>
+        <div class="slideshow-image"></div>
+        <div class="slideshow-image"></div>
+    </div>
+    
+    <div class="countdown-container" id="countdown">
+        <div class="countdown-title">EVENT STARTS IN</div>
+        <div class="countdown-timer">
+            <div class="countdown-unit">
+                <span id="countdown-hours" class="countdown-value">00</span>
+                <span class="countdown-label">HOURS</span>
+            </div>
+            <div class="countdown-unit">
+                <span id="countdown-minutes" class="countdown-value">00</span>
+                <span class="countdown-label">MINUTES</span>
+            </div>
+            <div class="countdown-unit">
+                <span id="countdown-seconds" class="countdown-value">00</span>
+                <span class="countdown-label">SECONDS</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="infinite-container pattern-dots">
+        <div class="scroll-content">
+            
+            <div class="section-wrapper hero-section text-midnight-rock relative overflow-hidden">
+                <div class="absolute inset-0 pointer-events-none">
+                    <div class="absolute top-20 left-10 w-2 h-2 bg-alpine-sunrise/30 rounded-full animate-float"></div>
+                    <div class="absolute top-40 right-20 w-3 h-3 bg-alpine-sunrise/20 rounded-full animate-float" style="animation-delay: 1s;"></div>
+                    <div class="absolute bottom-32 left-1/4 w-1.5 h-1.5 bg-alpine-sunrise/40 rounded-full animate-float" style="animation-delay: 2s;"></div>
+                    <div class="absolute top-1/2 right-1/3 w-2.5 h-2.5 bg-alpine-sunrise/25 rounded-full animate-float" style="animation-delay: 3s;"></div>
+                </div>
+                
+                <div class="relative z-10 text-center px-4 max-w-6xl mx-auto">
+                    <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-6 leading-tight text-shadow-gold animate-fade-in-up">
+                        A Friulian Evening
+                        <span class="block text-alpine-sunrise animate-glow">With Jermann</span>
+                    </h1>
+                    
+                    <p class="text-xl sm:text-2xl lg:text-3xl mb-4 font-light tracking-wide animate-fade-in-up" style="animation-delay: 0.2s;">
+                        Featuring Italy's Premier White Wine Maker
+                    </p>
+                    
+                    <p class="text-base sm:text-lg lg:text-xl mb-12 max-w-3xl mx-auto leading-relaxed opacity-90 animate-fade-in-up" style="animation-delay: 0.4s;">
+                        An unforgettable journey through the prestigious wines of Jermann paired with authentic Friulian cuisine by Culinary Director Riccardo Longo.
+                    </p>
+                </div>
+            </div>
+
+            <div class="section-wrapper jermann-section text-glacial-white relative overflow-hidden">
+                <div class="absolute inset-0 pattern-dots opacity-20"></div>
+                
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="text-center mb-16">
+                            <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl mb-6 text-shadow-gold">Jermann</h2>
+                            <div class="w-24 h-1 bg-gradient-to-r from-alpine-sunrise to-dolomite-silver mx-auto mb-6 rounded-full"></div>
+                            <p class="text-xl lg:text-2xl text-alpine-sunrise font-light">Italy's Premier White Wine Producer Since 1881</p>
+                        </div>
+                        
+                        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                            <div class="space-y-6 animate-slide-in-left">
+                                <p class="text-lg lg:text-xl leading-relaxed opacity-90">
+                                    Since 1881, the Jermann family has been crafting exceptional wines in Friuli-Venezia Giulia, 
+                                    Italy's northeastern region known for its distinctive white wines.
+                                </p>
+                                <p class="text-lg lg:text-xl leading-relaxed opacity-90">
+                                    Experience the authentic flavors of Friuli through perfect pairings crafted 
+                                    by Culinary Director Riccardo Longo, featuring dishes that highlight the region's
+                                    unique culinary heritage.
+                                </p>
+                                
+                                <div class="grid grid-cols-2 gap-6 mt-8">
+                                    <div class="glass text-center p-6 rounded-xl">
+                                        <div class="text-alpine-sunrise font-semibold text-sm mb-2 uppercase tracking-wider">Founded</div>
+                                        <div class="text-3xl font-bold">1881</div>
+                                    </div>
+                                    <div class="glass text-center p-6 rounded-xl">
+                                        <div class="text-alpine-sunrise font-semibold text-sm mb-2 uppercase tracking-wider">Region</div>
+                                        <div class="text-3xl font-bold">Friuli</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="w-full relative animate-slide-in-right">
+                                <div class="carousel-container rounded-2xl shadow-lg">
+                                    <div class="carousel-track" id="carouselTrack">
+                                        <div class="carousel-item">
+                                            <img src="botti.jpg" alt="Jermann Vineyard" class="w-full h-auto object-cover rounded-2xl">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="tramonto.jpg" alt="Jermann Wine Cellar" class="w-full h-auto object-cover rounded-2xl">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="villanova_05.jpg" alt="Jermann Wine Bottles" class="w-full h-auto object-cover rounded-2xl">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="cantina_villanova_21.jpg" alt="Jermann Pinot Grigio" class="w-full h-auto object-cover rounded-2xl">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="botti1.jpg" alt="Jermann Ramat Pinot Grigio" class="w-full h-auto object-cover rounded-2xl">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="cantina_ruttars_21.jpg" alt="Jermann Pinot Noir Red Angel" class="w-full h-auto object-cover rounded-2xl">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="carousel-nav absolute inset-y-0 flex items-center justify-between w-full px-4">
+                                        <button onclick="prevSlide()" class="p-2 bg-white/30 rounded-full text-white backdrop-blur-sm hover:bg-white/50">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                            </svg>
+                                        </button>
+                                        <button onclick="nextSlideManual()" class="p-2 bg-white/30 rounded-full text-white backdrop-blur-sm hover:bg-white/50">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="slideshow-dots" id="slideshowDots">
+                                        <div class="slideshow-dot active" onclick="goToSlide(0)"></div>
+                                        <div class="slideshow-dot" onclick="goToSlide(1)"></div>
+                                        <div class="slideshow-dot" onclick="goToSlide(2)"></div>
+                                        <div class="slideshow-dot" onclick="goToSlide(3)"></div>
+                                        <div class="slideshow-dot" onclick="goToSlide(4)"></div>
+                                        <div class="slideshow-dot" onclick="goToSlide(5)"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-wrapper hero-section text-midnight-rock relative overflow-hidden">
+                <div class="absolute inset-0 pointer-events-none">
+                    <div class="absolute top-20 left-10 w-2 h-2 bg-alpine-sunrise/30 rounded-full animate-float"></div>
+                    <div class="absolute top-40 right-20 w-3 h-3 bg-alpine-sunrise/20 rounded-full animate-float" style="animation-delay: 1s;"></div>
+                    <div class="absolute bottom-32 left-1/4 w-1.5 h-1.5 bg-alpine-sunrise/40 rounded-full animate-float" style="animation-delay: 2s;"></div>
+                    <div class="absolute top-1/2 right-1/3 w-2.5 h-2.5 bg-alpine-sunrise/25 rounded-full animate-float" style="animation-delay: 3s;"></div>
+                </div>
+                
+                <div class="relative z-10 text-center px-4 max-w-6xl mx-auto">
+                    <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-6 leading-tight text-shadow-gold animate-fade-in-up">
+                        A Friulian Evening
+                        <span class="block text-alpine-sunrise animate-glow">With Jermann</span>
+                    </h1>
+                    
+                    <p class="text-xl sm:text-2xl lg:text-3xl mb-4 font-light tracking-wide animate-fade-in-up" style="animation-delay: 0.2s;">
+                        Featuring Italy's Premier White Wine Maker
+                    </p>
+                    
+                    <p class="text-base sm:text-lg lg:text-xl mb-12 max-w-3xl mx-auto leading-relaxed opacity-90 animate-fade-in-up" style="animation-delay: 0.4s;">
+                        An unforgettable journey through the prestigious wines of Jermann paired with authentic Friulian cuisine by Culinary Director Riccardo Longo.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Carousel/Slideshow Logic
+        let currentSlide = 0;
+        const carouselTrack = document.getElementById('carouselTrack');
+        const slides = document.querySelectorAll('.carousel-item');
+        const dots = document.querySelectorAll('.slideshow-dot');
+        const totalSlides = slides.length;
+        let autoSlideInterval;
+
+        console.log(`Slideshow initialized: ${totalSlides} slides found`);
+
+        function updateSlideshow() {
+            // Move the carousel track
+            const translateX = -currentSlide * 100;
+            carouselTrack.style.transform = `translateX(${translateX}%)`;
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === currentSlide) {
+                    dot.classList.add('active');
+                }
+            });
+            
+            console.log(`Slide changed to: ${currentSlide + 1}/${totalSlides}`);
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlideshow();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlideshow();
+        }
+
+        function nextSlideManual() {
+            // Reset auto-advance timer when user manually navigates
+            clearInterval(autoSlideInterval);
+            nextSlide();
+            startAutoSlide();
+        }
+
+        function goToSlide(slideIndex) {
+            // Reset auto-advance timer when user manually navigates
+            clearInterval(autoSlideInterval);
+            currentSlide = slideIndex;
+            updateSlideshow();
+            startAutoSlide();
+        }
+
+        function startAutoSlide() {
+            // Auto-advance slideshow every 4 seconds
+            autoSlideInterval = setInterval(() => {
+                nextSlide();
+            }, 4000);
+        }
+
+        // Initialize slideshow when page loads
+        window.addEventListener('load', () => {
+            console.log('Page loaded, starting slideshow');
+            updateSlideshow(); // Initialize first slide
+            startAutoSlide(); // Start automatic slideshow
+        });
+
+        // Optional: Pause auto-advance when user hovers over the carousel
+        const carouselContainer = document.querySelector('.carousel-container');
+        carouselContainer.addEventListener('mouseenter', () => {
+            clearInterval(autoSlideInterval);
+            console.log('Auto-slide paused (mouse hover)');
+        });
+
+        carouselContainer.addEventListener('mouseleave', () => {
+            startAutoSlide();
+            console.log('Auto-slide resumed');
+        });
+        
+        // Countdown to 18:00 with fade-out functionality
+        const countdownElement = document.getElementById('countdown');
+        let countdownInterval;
+
+        function updateCountdown() {
+            const now = new Date();
+            const target = new Date();
+            
+            target.setHours(18, 0, 0, 0);
+            
+            if (now > target) {
+                target.setDate(target.getDate() + 1);
+            }
+            
+            const diff = target - now;
+            
+            if (diff <= 1000) { // Condition to trigger fade-out
+                countdownElement.classList.add('countdown-expired');
+                
+                // Use a short delay to ensure the animation starts before clearing the interval
+                setTimeout(() => {
+                    clearInterval(countdownInterval);
+                    countdownElement.style.display = 'none';
+                }, 1000); // Wait for 1 second (same as fadeOut animation)
+                return;
+            }
+            
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown-hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('countdown-minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('countdown-seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        // Initialize and update countdown every second
+        countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
