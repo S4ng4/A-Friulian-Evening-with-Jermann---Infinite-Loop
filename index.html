@@ -27,6 +27,8 @@
                         'snow-shadow': '#E8EFF4',
                         'ice-cave': '#D2DDE5',
                         'midnight-rock': '#2A3439',
+                        // Jermann green from logo
+                        'jermann-green': '#006640',
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
@@ -91,6 +93,19 @@
         /* Luxury text effects */
         .text-shadow-gold {
             text-shadow: 0 2px 4px rgba(62, 72, 50, 0.3);
+        }
+        
+        /* Jermann green text effects */
+        .text-shadow-jermann {
+            text-shadow: 0 2px 4px rgba(0, 102, 64, 0.5);
+        }
+        
+        .text-outline-jermann {
+            text-shadow: 
+                -1px -1px 0 #006640,
+                1px -1px 0 #006640,
+                -1px 1px 0 #006640,
+                1px 1px 0 #006640;
         }
         
         /* Background patterns */
@@ -364,13 +379,13 @@
                     <div class="absolute top-1/2 right-1/3 w-2.5 h-2.5 bg-alpine-sunrise/25 rounded-full animate-float" style="animation-delay: 3s;"></div>
                 </div>
                 
-                 <div class="relative z-10 text-center text-midnight-rock px-4 max-w-6xl mx-auto">
-        <div class="reveal">
-            <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-6 leading-tight text-shadow-gold">
-                A Friady Night in  Friuli
-                <span class="block text-alpine-sunrise animate-glow">With  Felix Jermann</span>
-            </h1>
-        </div>
+                <div class="relative z-10 text-center text-midnight-rock px-4 max-w-6xl mx-auto">
+                    <div class="reveal">
+                        <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-6 leading-tight text-shadow-jermann">
+                            A Friday Night in Friuli
+                            <span class="block text-alpine-sunrise text-outline-jermann animate-glow">With Felix Jermann</span>
+                        </h1>
+                    </div>
                     
                     <p class="text-xl sm:text-2xl lg:text-3xl mb-4 font-light tracking-wide animate-fade-in-up" style="animation-delay: 0.2s;">
                         Featuring Italy's Premier White Wine Maker
@@ -388,7 +403,7 @@
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
                     <div class="max-w-6xl mx-auto">
                         <div class="text-center mb-16">
-                            <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl mb-6 text-shadow-gold">Jermann</h2>
+                            <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl mb-6 text-shadow-jermann">Jermann</h2>
                             <div class="w-24 h-1 bg-gradient-to-r from-alpine-sunrise to-dolomite-silver mx-auto mb-6 rounded-full"></div>
                             <p class="text-xl lg:text-2xl text-alpine-sunrise font-light">Italy's Premier White Wine Producer Since 1881</p>
                         </div>
@@ -490,9 +505,9 @@
                 </div>
                 
                 <div class="relative z-10 text-center px-4 max-w-6xl mx-auto">
-                    <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-6 leading-tight text-shadow-gold animate-fade-in-up">
+                    <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-6 leading-tight text-shadow-jermann animate-fade-in-up">
                         A Friulian Evening
-                        <span class="block text-alpine-sunrise animate-glow">With Jermann</span>
+                        <span class="block text-alpine-sunrise text-outline-jermann animate-glow">With Jermann</span>
                     </h1>
                     
                     <p class="text-xl sm:text-2xl lg:text-3xl mb-4 font-light tracking-wide animate-fade-in-up" style="animation-delay: 0.2s;">
