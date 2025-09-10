@@ -90,7 +90,7 @@
         
         /* Luxury text effects */
         .text-shadow-gold {
-            text-shadow: 0 2px 4px rgba(224, 181, 131, 0.3);
+            text-shadow: 0 2px 4px rgba(62, 72, 50, 0.3);
         }
         
         /* Background patterns */
@@ -303,6 +303,24 @@
         .countdown-expired {
             animation: fadeOut 1s ease-in forwards;
         }
+        
+        /* First slide timer */
+        .first-slide-timer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 20;
+        }
+        
+        .first-slide-progress {
+            height: 100%;
+            width: 0%;
+            background: #E0B583;
+            transition: width 20s linear;
+        }
     </style>
 </head>
 
@@ -402,33 +420,35 @@
                             <div class="w-full relative animate-slide-in-right">
                                 <div class="carousel-container rounded-2xl shadow-lg">
                                     <div class="carousel-track" id="carouselTrack">
+                                        <!-- First slide with 20-second timer -->
                                         <div class="carousel-item">
-                                            <img src="botti.jpg" alt="Jermann Vineyard" class="w-full h-auto object-cover rounded-2xl">
+                                            <img src="Maze-Row-HC-Jermann-0068 (1).png" alt="Jermann Vineyard" class="w-full h-auto object-cover rounded-2xl">
+                                            <div class="first-slide-timer">
+                                                <div class="first-slide-progress" id="firstSlideProgress"></div>
+                                            </div>
                                         </div>
+                                        <!-- Additional slides -->
                                         <div class="carousel-item">
-                                            <img src="tramonto.jpg" alt="Jermann Wine Cellar" class="w-full h-auto object-cover rounded-2xl">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="villanova_05.jpg" alt="Jermann Wine Bottles" class="w-full h-auto object-cover rounded-2xl">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="cantina_villanova_21.jpg" alt="Jermann Pinot Grigio" class="w-full h-auto object-cover rounded-2xl">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="botti1.jpg" alt="Jermann Ramat Pinot Grigio" class="w-full h-auto object-cover rounded-2xl">
+                                            <img src="Maze-Row-LB-Jermann-7066 (1).png" alt="Jermann Wine Cellar" class="w-full h-auto object-cover rounded-2xl">
                                         </div>
                                         <div class="carousel-item">
-                                            <img src="cantina_ruttars_21.jpg" alt="Jermann Pinot Noir Red Angel" class="w-full h-auto object-cover rounded-2xl">
-                                        </div>
+                                            <img src="Maze-Row-LB-Jermann-7328 (1).jpg" alt="Jermann Wine Bottles" class="w-full h-auto object-cover rounded-2xl">
                                         </div>
                                         <div class="carousel-item">
-                                            <img src="Maze-Row-HC-Jermann-0068 (1).png
-" alt="Jermann Pinot Noir Red Angel" class="w-full h-auto object-cover rounded-2xl">
+                                            <img src="Maze-Row-RFO-Jermann-DSC2807 (2).png" alt="Jermann Pinot Grigio" class="w-full h-auto object-cover rounded-2xl">
                                         </div>
-                                     <div class="carousel-item">
-                                            <img src="Maze-Row-LB-Jermann-7066 (1).png" alt="Jermann Pinot Noir Red Angel" class="w-full h-auto object-cover rounded-2xl">
+                                        <div class="carousel-item">
+                                            <img src="Maze-Row-RFO-Jermann-DSC2807.png" alt="Jermann Ramat Pinot Grigio" class="w-full h-auto object-cover rounded-2xl">
                                         </div>
-                                        
+                                        <div class="carousel-item">
+                                            <img src="Maze-Row-RFO-Jermann-DSC2827 (1).png" alt="Jermann Pinot Noir Red Angel" class="w-full h-auto object-cover rounded-2xl">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="Maze-Row-RFO-Jermann-DSC3376 (1).png" alt="Jermann Pinot Noir Red Angel" class="w-full h-auto object-cover rounded-2xl">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="Maze-Row-RL-Jermann-0651-no-vintage.png" alt="Jermann Pinot Noir Red Angel" class="w-full h-auto object-cover rounded-2xl">
+                                        </div>
                                     </div>
                                     
                                     <div class="carousel-nav absolute inset-y-0 flex items-center justify-between w-full px-4">
@@ -451,6 +471,8 @@
                                         <div class="slideshow-dot" onclick="goToSlide(3)"></div>
                                         <div class="slideshow-dot" onclick="goToSlide(4)"></div>
                                         <div class="slideshow-dot" onclick="goToSlide(5)"></div>
+                                        <div class="slideshow-dot" onclick="goToSlide(6)"></div>
+                                        <div class="slideshow-dot" onclick="goToSlide(7)"></div>
                                     </div>
                                 </div>
                             </div>
@@ -494,6 +516,8 @@
         const dots = document.querySelectorAll('.slideshow-dot');
         const totalSlides = slides.length;
         let autoSlideInterval;
+        let firstSlideTimer;
+        let firstSlideShown = false;
 
         console.log(`Slideshow initialized: ${totalSlides} slides found`);
 
@@ -514,18 +538,35 @@
         }
 
         function nextSlide() {
+            // If we're on the first slide and it hasn't been shown for 20 seconds yet
+            if (currentSlide === 0 && !firstSlideShown) {
+                return; // Don't advance yet
+            }
+            
             currentSlide = (currentSlide + 1) % totalSlides;
             updateSlideshow();
+            
+            // If we're going back to the first slide, reset the timer
+            if (currentSlide === 0) {
+                startFirstSlideTimer();
+            }
         }
 
         function prevSlide() {
             currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
             updateSlideshow();
+            
+            // If we're going back to the first slide, reset the timer
+            if (currentSlide === 0) {
+                startFirstSlideTimer();
+            }
         }
 
         function nextSlideManual() {
             // Reset auto-advance timer when user manually navigates
             clearInterval(autoSlideInterval);
+            clearTimeout(firstSlideTimer);
+            firstSlideShown = true;
             nextSlide();
             startAutoSlide();
         }
@@ -533,13 +574,43 @@
         function goToSlide(slideIndex) {
             // Reset auto-advance timer when user manually navigates
             clearInterval(autoSlideInterval);
+            clearTimeout(firstSlideTimer);
+            
+            // If going to the first slide, start the timer
+            if (slideIndex === 0) {
+                firstSlideShown = false;
+                startFirstSlideTimer();
+            } else {
+                firstSlideShown = true;
+            }
+            
             currentSlide = slideIndex;
             updateSlideshow();
             startAutoSlide();
         }
 
+        function startFirstSlideTimer() {
+            // Reset the progress bar
+            const progressBar = document.getElementById('firstSlideProgress');
+            progressBar.style.transition = 'none';
+            progressBar.style.width = '0%';
+            
+            // Force a reflow
+            void progressBar.offsetWidth;
+            
+            // Start the 20-second timer
+            progressBar.style.transition = 'width 20s linear';
+            progressBar.style.width = '100%';
+            
+            // Set a timeout to mark the first slide as shown after 20 seconds
+            clearTimeout(firstSlideTimer);
+            firstSlideTimer = setTimeout(() => {
+                firstSlideShown = true;
+            }, 20000);
+        }
+
         function startAutoSlide() {
-            // Auto-advance slideshow every 4 seconds
+            // Auto-advance slideshow every 4 seconds (except for first slide)
             autoSlideInterval = setInterval(() => {
                 nextSlide();
             }, 4000);
@@ -549,6 +620,7 @@
         window.addEventListener('load', () => {
             console.log('Page loaded, starting slideshow');
             updateSlideshow(); // Initialize first slide
+            startFirstSlideTimer(); // Start the 20-second timer for first slide
             startAutoSlide(); // Start automatic slideshow
         });
 
