@@ -218,45 +218,61 @@
             background-size: cover;
             background-position: center;
             opacity: 0;
-            animation: imageAnimation 27s infinite;
+            animation: imageAnimation 39s infinite;
             filter: brightness(0.7);
         }
         
         .slideshow-image:nth-child(1) {
-            background-image: url('botti.jpg');
+            background-image: url('03slide-home.jpg');
             animation-delay: 0s;
         }
         .slideshow-image:nth-child(2) {
-            background-image: url('tramonto.jpg');
+            background-image: url('botti.jpg');
             animation-delay: 3s;
         }
         .slideshow-image:nth-child(3) {
-            background-image: url('villanova_05.jpg');
+            background-image: url('Maze-Row-RFO-Jermann-DSC2807.png');
             animation-delay: 6s;
         }
         .slideshow-image:nth-child(4) {
-            background-image: url('cantina_villanova_21.jpg');
+            background-image: url('tramonto.jpg');
             animation-delay: 9s;
         }
         .slideshow-image:nth-child(5) {
-            background-image: url('botti1.jpg');
+            background-image: url('villanova_05.jpg');
             animation-delay: 12s;
         }
         .slideshow-image:nth-child(6) {
-            background-image: url('cantina_ruttars_21.jpg');
+            background-image: url('Maze-Row-RL-Jermann-0651-no-vintage.png');
             animation-delay: 15s;
         }
         .slideshow-image:nth-child(7) {
-            background-image: url('ruttars.jpg');
+            background-image: url('cantina_villanova_21.jpg');
             animation-delay: 18s;
         }
         .slideshow-image:nth-child(8) {
-            background-image: url('03slide-home.jpg');
+            background-image: url('Felix-Family.jpg');
             animation-delay: 21s;
         }
         .slideshow-image:nth-child(9) {
-            background-image: url('Felix-Family.jpg');
+            background-image: url('botti1.jpg');
             animation-delay: 24s;
+        }
+        .slideshow-image:nth-child(10) {
+            background-image: url('cantina_ruttars_21.jpg');
+            animation-delay: 27s;
+        }
+        .slideshow-image:nth-child(11) {
+            background-image: url('ruttars.jpg');
+            animation-delay: 30s;
+        }
+        .slideshow-image:nth-child(12) {
+            background-image: url('gcaLogo.png');
+            animation-delay: 33s;
+        }
+        .slideshow-image:nth-child(13) {
+            background-image: url('jermann-logo.png');
+            animation-delay: 36s;
         }
         
         @keyframes imageAnimation {
@@ -386,12 +402,27 @@
             background: #E0B583;
             color: #2A3439;
         }
+
+        /* Logo sizing adjustments */
+        .carousel-item img[alt*="Logo"] {
+            object-fit: contain !important;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            max-width: 25% !important;
+            max-height: 25% !important;
+            width: auto !important;
+            height: auto !important;
+        }
     </style>
 </head>
 
 <body class="font-sans text-midnight-rock bg-pearl antialiased overflow-hidden">
     
     <div class="slideshow">
+        <div class="slideshow-image"></div>
+        <div class="slideshow-image"></div>
+        <div class="slideshow-image"></div>
+        <div class="slideshow-image"></div>
         <div class="slideshow-image"></div>
         <div class="slideshow-image"></div>
         <div class="slideshow-image"></div>
@@ -767,4 +798,3 @@
     </script>
 </body>
 </html>
-
